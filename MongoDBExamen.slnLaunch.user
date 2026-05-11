@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "MongoDBExamen\\MongoDBExamen.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "DIseñoMongoDBExamen\\DIseñoMongoDBExamen.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]
