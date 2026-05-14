@@ -91,7 +91,7 @@ namespace DIseñoMongoDBExamen.UserControls
             var nueva = new Promocion
             {
                 Id = Guid.NewGuid(),
-                NombrePromo = txtNombre.Text,
+                Nombre = txtNombre.Text,
                 Descripcion = txtDescripcion.Text,
                 PorcentajeDescuento = desc,
                 FechaInicio = dtpInicio.Value,
@@ -114,7 +114,7 @@ namespace DIseñoMongoDBExamen.UserControls
             var promo = (Promocion)dgvPromociones.Rows[e.RowIndex].DataBoundItem;
             idSeleccionado = promo.Id;
 
-            txtNombre.Text = promo.NombrePromo;
+            txtNombre.Text = promo.Nombre;
             txtDescripcion.Text = promo.Descripcion;
             txtDescuento.Text = promo.PorcentajeDescuento.ToString();
             dtpInicio.Value = promo.FechaInicio;
@@ -133,7 +133,7 @@ namespace DIseñoMongoDBExamen.UserControls
             var modificado = new Promocion
             {
                 Id = idSeleccionado.Value,
-                NombrePromo = txtNombre.Text,
+                Nombre = txtNombre.Text,
                 Descripcion = txtDescripcion.Text,
                 PorcentajeDescuento = decimal.Parse(txtDescuento.Text),
                 FechaInicio = dtpInicio.Value,

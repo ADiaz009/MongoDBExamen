@@ -8,7 +8,7 @@ namespace DIseñoMongoDBExamen.UserControls
     {
         private DataService _service = new DataService();
         private List<Usuario> listaUsuarios = new List<Usuario>();
-        private Guid? idSeleccionado = null;
+        private Usuario? _usuarioSeleccionado = null;
 
         public UC_Usuarios()
         {
@@ -61,7 +61,7 @@ namespace DIseñoMongoDBExamen.UserControls
 
             var user = (Usuario)dgvUsuarios.Rows[e.RowIndex].DataBoundItem;
 
-            idSeleccionado = user.Id;
+            _usuarioSeleccionado = user;
             // Usamos tus nombres de propiedad: Nombre, Apellidos, NombreUsuario
             txtNombre.Text = user.Nombre;
             txtApellido.Text = user.Apellidos;
@@ -75,58 +75,165 @@ namespace DIseñoMongoDBExamen.UserControls
 
         private async void btnAgregar_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtUserName.Text) || cmbRol.SelectedIndex == -1) return;
-
-            var nuevo = new Usuario
+            try
             {
-                Id = Guid.NewGuid(),
-                Nombre = txtNombre.Text,
-                Apellidos = txtApellido.Text,
-                NombreUsuario = txtUserName.Text,
-                Password = txtPassword.Text,
-                Rol = cmbRol.Text,
-                SucursalId = GlobalConfig.SucursalSeleccionadaId ?? Guid.Empty
-            };
+                var nuevo = new Usuario
+                {
+                    Id = Guid.NewGuid(),
 
-            if (await _service.CreateAsync("Usuario", nuevo))
-            {
-                MessageBox.Show("Registrado.");
+                    Nombre = txtNombre.Text,
+
+                    Apellidos = txtApellido.Text,
+
+                    NombreUsuario = txtUserName.Text,
+
+                    Password = txtPassword.Text,
+
+                    Rol = cmbRol.Text,
+
+                    SucursalId =
+                        GlobalConfig.SucursalSeleccionadaId
+                        ?? Guid.Empty
+                };
+
+                bool ok =
+                    await _service.CreateAsync(
+                        "Usuario",
+                        nuevo);
+
+                if (!ok)
+                {
+                    MessageBox.Show(
+                        "No se pudo guardar."
+                    );
+
+                    return;
+                }
+
+                MessageBox.Show(
+                    "Usuario agregado."
+                );
+
                 LimpiarTodo();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Error:\n{ex.Message}"
+                );
             }
         }
 
         private async void btnEditar_Click(object sender, EventArgs e)
         {
-            if (idSeleccionado == null) return;
-
-            var modificado = new Usuario
+            try
             {
-                Id = idSeleccionado.Value,
-                Nombre = txtNombre.Text,
-                Apellidos = txtApellido.Text,
-                NombreUsuario = txtUserName.Text,
-                Password = txtPassword.Text,
-                Rol = cmbRol.Text,
-                SucursalId = GlobalConfig.SucursalSeleccionadaId ?? Guid.Empty
-            };
+                if (_usuarioSeleccionado == null)
+                {
+                    MessageBox.Show(
+                        "Seleccioná un usuario."
+                    );
 
-            if (await _service.UpdateAsync("Usuario", idSeleccionado.Value, modificado))
-            {
-                MessageBox.Show("Actualizado.");
+                    return;
+                }
+
+                var modificado = new Usuario
+                {
+                    Id = _usuarioSeleccionado.Id,
+
+                    Nombre = txtNombre.Text,
+
+                    Apellidos = txtApellido.Text,
+
+                    NombreUsuario = txtUserName.Text,
+
+                    Password = txtPassword.Text,
+
+                    Rol = cmbRol.Text,
+
+                    SucursalId =
+                        GlobalConfig.SucursalSeleccionadaId
+                        ?? Guid.Empty
+                };
+
+                bool ok =
+                    await _service.UpdateAsync(
+                        "Usuario",
+                        modificado.Id,
+                        modificado);
+
+                if (!ok)
+                {
+                    MessageBox.Show(
+                        "No se pudo actualizar."
+                    );
+
+                    return;
+                }
+
+                MessageBox.Show(
+                    "Usuario actualizado."
+                );
+
                 LimpiarTodo();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Error:\n{ex.Message}"
+                );
             }
         }
 
         private async void btnEliminar_Click(object sender, EventArgs e)
         {
-            if (idSeleccionado == null) return;
-
-            if (MessageBox.Show("¿Borrar?", "Aviso", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            try
             {
-                if (await _service.DeleteAsync("Usuario", idSeleccionado.Value))
+                if (_usuarioSeleccionado == null)
                 {
-                    LimpiarTodo();
+                    MessageBox.Show(
+                        "Seleccioná un usuario."
+                    );
+
+                    return;
                 }
+
+                var r = MessageBox.Show(
+                    $"¿Eliminar a {_usuarioSeleccionado.Nombre}?",
+                    "Confirmar",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                );
+
+                if (r != DialogResult.Yes)
+                    return;
+
+                bool ok =
+                    await _service.DeleteAsync(
+                        "Usuario",
+                        _usuarioSeleccionado.Id
+                    );
+
+                if (!ok)
+                {
+                    MessageBox.Show(
+                        "No se pudo eliminar."
+                    );
+
+                    return;
+                }
+
+                MessageBox.Show(
+                    "Usuario eliminado."
+                );
+
+                LimpiarTodo();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Error:\n{ex.Message}"
+                );
             }
         }
 
@@ -140,7 +247,7 @@ namespace DIseñoMongoDBExamen.UserControls
             txtPassword.Clear();
             txtBuscar.Clear();
             cmbRol.SelectedIndex = -1;
-            idSeleccionado = null;
+            _usuarioSeleccionado = null;
             btnAgregar.Enabled = true;
             btnEditar.Enabled = false;
             CargarDatos();

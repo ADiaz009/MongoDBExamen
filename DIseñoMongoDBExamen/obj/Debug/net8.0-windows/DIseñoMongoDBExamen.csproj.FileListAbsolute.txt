@@ -54,3 +54,4 @@ C:\Users\fares\source\repos\MongoDBExamen\DIseñoMongoDBExamen\obj\Debug\net8.0-
 C:\Users\fares\source\repos\MongoDBExamen\DIseñoMongoDBExamen\obj\Debug\net8.0-windows\DIseñoMongoDBExamen.UserControls.UC_Analiticas.resources
 C:\Users\fares\source\repos\MongoDBExamen\DIseñoMongoDBExamen\obj\Debug\net8.0-windows\DIseñoMongoDBExamen.UserControls.UC_Promociones.resources
 C:\Users\fares\source\repos\MongoDBExamen\DIseñoMongoDBExamen\obj\Debug\net8.0-windows\DIse_oMo.A8A18ABB.Up2Date
+C:\Users\fares\source\repos\MongoDBExamen\DIseñoMongoDBExamen\obj\Debug\net8.0-windows\DIseñoMongoDBExamen.sourcelink.json

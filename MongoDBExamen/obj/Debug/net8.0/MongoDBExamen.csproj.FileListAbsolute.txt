@@ -39,3 +39,4 @@ C:\Users\fares\source\repos\MongoDBExamen\MongoDBExamen\obj\Debug\net8.0\refint\
 C:\Users\fares\source\repos\MongoDBExamen\MongoDBExamen\obj\Debug\net8.0\MongoDBExamen.pdb
 C:\Users\fares\source\repos\MongoDBExamen\MongoDBExamen\obj\Debug\net8.0\MongoDBExamen.genruntimeconfig.cache
 C:\Users\fares\source\repos\MongoDBExamen\MongoDBExamen\obj\Debug\net8.0\ref\MongoDBExamen.dll
+C:\Users\fares\source\repos\MongoDBExamen\MongoDBExamen\obj\Debug\net8.0\MongoDBExamen.sourcelink.json

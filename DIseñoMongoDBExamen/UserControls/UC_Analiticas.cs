@@ -85,7 +85,7 @@ namespace DIseñoMongoDBExamen.UserControls
                     ws.Columns().AdjustToContents();
 
                     // NOTA PARA LA DEFENSA: 
-                    // ClosedXML crea la estructura de datos lista para que Excel 
+                    // ClosedXML crea la estructura de datos lista para que Excel   
                     // genere los gráficos automáticamente mediante tablas dinámicas o 
                     // simplemente estilizando el reporte gerencial.
 
@@ -104,7 +104,7 @@ namespace DIseñoMongoDBExamen.UserControls
         {
             if (listaFinal.Count == 0) return;
 
-            string path = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Reporte_Gerencial_UNI.xlsx");
+            string path = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Reporte_Gerencial_UNI.pdf");
 
             try
             {

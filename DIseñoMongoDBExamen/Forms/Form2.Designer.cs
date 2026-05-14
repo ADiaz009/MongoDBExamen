@@ -38,13 +38,13 @@
             btnVentas = new Button();
             btnInventario = new Button();
             pnlHeader = new Panel();
+            label1 = new Label();
+            cmbSucursalGlobal = new ComboBox();
             lblSucursal = new Label();
             lblRol = new Label();
             lblUsuario = new Label();
             button5 = new Button();
             pnlContenedor = new Panel();
-            cmbSucursalGlobal = new ComboBox();
-            label1 = new Label();
             pnlSidebar.SuspendLayout();
             pnlHeader.SuspendLayout();
             SuspendLayout();
@@ -157,6 +157,23 @@
             pnlHeader.Size = new Size(777, 115);
             pnlHeader.TabIndex = 1;
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(490, 51);
+            label1.Name = "label1";
+            label1.Size = new Size(112, 15);
+            label1.TabIndex = 4;
+            label1.Text = "Cambio de Sucursal";
+            // 
+            // cmbSucursalGlobal
+            // 
+            cmbSucursalGlobal.FormattingEnabled = true;
+            cmbSucursalGlobal.Location = new Point(608, 47);
+            cmbSucursalGlobal.Name = "cmbSucursalGlobal";
+            cmbSucursalGlobal.Size = new Size(121, 23);
+            cmbSucursalGlobal.TabIndex = 3;
+            // 
             // lblSucursal
             // 
             lblSucursal.AutoSize = true;
@@ -200,23 +217,6 @@
             pnlContenedor.Size = new Size(777, 577);
             pnlContenedor.TabIndex = 3;
             // 
-            // cmbSucursalGlobal
-            // 
-            cmbSucursalGlobal.FormattingEnabled = true;
-            cmbSucursalGlobal.Location = new Point(608, 47);
-            cmbSucursalGlobal.Name = "cmbSucursalGlobal";
-            cmbSucursalGlobal.Size = new Size(121, 23);
-            cmbSucursalGlobal.TabIndex = 3;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(490, 51);
-            label1.Name = "label1";
-            label1.Size = new Size(112, 15);
-            label1.TabIndex = 4;
-            label1.Text = "Cambio de Sucursal";
-            // 
             // Form2
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -228,6 +228,7 @@
             Controls.Add(pnlSidebar);
             Name = "Form2";
             Text = "Form2";
+            Load += FormMenu_Load;
             pnlSidebar.ResumeLayout(false);
             pnlHeader.ResumeLayout(false);
             pnlHeader.PerformLayout();

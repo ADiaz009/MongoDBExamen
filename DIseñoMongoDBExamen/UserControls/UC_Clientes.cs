@@ -87,10 +87,12 @@ namespace DIseñoMongoDBExamen.UserControls
                 .Select(c => new {
                     c.Fecha,
                     Subtotal = "C$ " + c.Subtotal.ToString("N2"),
-                    IVA = "C$ " + c.IVA.ToString("N2"),
+                    IVA = "C$ " + c.Iva.ToString("N2"),
                     Total = "C$ " + c.Total.ToString("N2")
                 })
                 .ToList();
+
+            
 
             dgvHistorial.DataSource = null;
             dgvHistorial.DataSource = historial;
@@ -142,9 +144,67 @@ namespace DIseñoMongoDBExamen.UserControls
             }
         }
 
-        private void btnEliminar_Click(object sender, EventArgs e)
+        private async void btnEliminar_Click(object sender, EventArgs e)
         {
+            try
+            {
+                if (dgvClientes.CurrentRow == null)
+                {
+                    MessageBox.Show(
+                        "Seleccioná un cliente."
+                    );
 
+                    return;
+                }
+
+                var cliente =
+                    dgvClientes.CurrentRow.DataBoundItem
+                    as Cliente;
+
+                if (cliente == null)
+                    return;
+
+                var r = MessageBox.Show(
+                    $"¿Eliminar a {cliente.Nombre}?",
+                    "Confirmar",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                );
+
+                if (r != DialogResult.Yes)
+                    return;
+
+                bool ok =
+                    await _service.DeleteAsync(
+                        "Cliente",
+                        cliente.Id
+                    );
+
+                if (!ok)
+                {
+                    MessageBox.Show(
+                        "No se pudo eliminar."
+                    );
+
+                    return;
+                }
+
+                MessageBox.Show(
+                    "Cliente eliminado."
+                );
+
+                // REFRESCAR GRID
+                ConfigurarGrids();
+
+                // LIMPIAR HISTORIAL
+                dgvHistorial.DataSource = null;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Error:\n{ex.Message}"
+                );
+            }
         }
 
         private void btnLimpiar_Click(object sender, EventArgs e)=>LimpiarTodo();

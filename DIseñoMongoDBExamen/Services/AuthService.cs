@@ -13,7 +13,7 @@ namespace DIseñoMongoDBExamen.Services
         public static Usuario UsuarioActual { get; set; }
 
         // Definición de Roles (Constantes para no cometer errores de dedo)
-        public const string ROL_DUEÑO = "Dueño";
+        public const string ROL_CEO = "CEO";
         public const string ROL_ADMIN = "Administrador";
         public const string ROL_TECNICO = "Técnico";
         public const string ROL_VENDEDOR = "Vendedor";
@@ -30,6 +30,6 @@ namespace DIseñoMongoDBExamen.Services
         }
 
         // Método para saber si es "Staff de Poder" (Dueño o Admin)
-        public static bool EsAdminODueño() => TienePermiso(ROL_DUEÑO, ROL_ADMIN);
+        public static bool EsAdminODueño() => TienePermiso(ROL_CEO, ROL_ADMIN);
     }
 }

@@ -26,7 +26,9 @@ namespace DIseñoMongoDBExamen.UserControls
 
             // FILTRO DINÁMICO:
             listaCompleta = todos.Where(p => p.SucursalId == GlobalConfig.SucursalSeleccionadaId).ToList();
+            dgvInventario.AutoGenerateColumns = true;
             dgvInventario.DataSource = null;
+            
             dgvInventario.DataSource = listaCompleta;
         }
 
@@ -64,7 +66,8 @@ namespace DIseñoMongoDBExamen.UserControls
         // --- BOTÓN GUARDAR (Para nuevos) ---
         private async void btnAgregar_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtNombreProd.Text)) return;
+            if (string.IsNullOrWhiteSpace(txtNombreProd.Text))
+                return;
 
             var nuevo = new Inventario
             {
@@ -72,7 +75,9 @@ namespace DIseñoMongoDBExamen.UserControls
                 NombreProducto = txtNombreProd.Text,
                 Precio = decimal.Parse(txtPrecio.Text),
                 Stock = int.Parse(txtStock.Text),
-                Categoria = txtCategoria.Text
+                Categoria = txtCategoria.Text,
+
+                SucursalId = GlobalConfig.SucursalSeleccionadaId ?? Guid.Empty
             };
 
             if (await _service.CreateAsync("Inventario", nuevo))
@@ -86,22 +91,21 @@ namespace DIseñoMongoDBExamen.UserControls
         // --- BOTÓN EDITAR (Para cambios) ---
         private async void btnEditar_Click(object sender, EventArgs e)
         {
-            if (idSeleccionado == null) return;
-
-            var modificado = new Inventario
+            var item = new Inventario
             {
-                Id = idSeleccionado.Value,
+                Id = Guid.NewGuid(),
                 NombreProducto = txtNombreProd.Text,
+                Categoria = txtCategoria.Text,
                 Precio = decimal.Parse(txtPrecio.Text),
                 Stock = int.Parse(txtStock.Text),
-                Categoria = txtCategoria.Text
+                SucursalId = UserSession.SucursalId // Sin esto, la API lo puede rechazar
             };
 
-            if (await _service.UpdateAsync("Inventario", idSeleccionado.Value, modificado))
+            var ok = await _service.CreateAsync<Inventario>("Inventario", item);
+            if (ok)
             {
-                MessageBox.Show("Producto actualizado.");
+                MessageBox.Show("Producto ingresado al inventario");
                 LimpiarInterfaz();
-                CargarDatos();
             }
         }
 

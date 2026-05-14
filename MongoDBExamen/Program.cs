@@ -1,6 +1,13 @@
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Serializers;
 using MongoDBExamen.AppContext;
 using MongoDBExamen.Interfaces;
 using MongoDBExamen.Repositories;
+
+BsonSerializer.RegisterSerializer(
+    new GuidSerializer(GuidRepresentation.Standard)
+);
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,6 +50,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowAll");
 
 app.UseAuthorization();
 

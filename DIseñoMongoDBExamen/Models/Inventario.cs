@@ -8,6 +8,7 @@ namespace DIseñoMongoDBExamen.Models
 {
     public class Inventario
     {
+        
         public Guid Id { get; set; } = Guid.NewGuid();
         public string NombreProducto { get; set; } = string.Empty;
         public string Categoria { get; set; } = string.Empty;

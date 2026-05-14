@@ -102,6 +102,7 @@
             txtBuscarProd.Name = "txtBuscarProd";
             txtBuscarProd.Size = new Size(149, 23);
             txtBuscarProd.TabIndex = 8;
+            txtBuscarProd.TextChanged += txtBuscarProd_TextChanged;
             // 
             // numCantidad
             // 
@@ -163,6 +164,7 @@
             txtBuscarCliente.Name = "txtBuscarCliente";
             txtBuscarCliente.Size = new Size(152, 23);
             txtBuscarCliente.TabIndex = 0;
+            txtBuscarCliente.TextChanged += txtBuscarCliente_TextChanged;
             // 
             // dgvCarrito
             // 
